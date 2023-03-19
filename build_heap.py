@@ -4,24 +4,31 @@
 def build_heap(data):
     swaps = []
     n = len(data)
-    for i in range(n // 2 - 1, -1, -1):
-        j=i
-        while True:
-            k = 2 * j + 1
-            if k >= n:
-                break
-            if k + 1 < n and data[k + 1] < data[k]:
-                k += 1
-            if data[k] < data[j]:
-                swaps.append((j, k))
-                data[j], data[k] = data[k], data[j]
-                j = k
-            else:
-                break
+    for i in range(n // 2 - 1, -1):
+        swaps += sift_down(data, i, n)
 
 
     return swaps
 
+def sift_down(data, i, n):
+    swaps = []
+    min_index = i
+
+    l = 2 * i + 1
+    if l < n and data[l] < data[min_index]:
+        min_index = l
+
+    r = 2 * i + 2
+    if r < n and data[r] < data[min_index]:
+        min_index = r
+
+    # swapping i with the minimum element and calling sift_down recursively
+    if i != min_index:
+        swaps.append((i, min_index))
+        data[i], data[min_index] = data[min_index], data[i]
+        swaps += sift_down(data, min_index, n)
+
+    return swaps
 
 def main():
     
@@ -43,7 +50,7 @@ def main():
 
     # TODO: output how many swaps were made, 
     # this number should be less than 4n (less than 4*len(data))
-    assert len(swaps) <= 4*n
+    assert len(swaps) <= 4 * n
 
     # output all swaps
     print(len(swaps))
