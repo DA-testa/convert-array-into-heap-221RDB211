@@ -38,11 +38,15 @@ def main():
 
 
     # input from keyboard
-    n = int(input().strip())
+    n = int(input())
     data = list(map(int, input().split()))
 
     # checks if lenght of data is the same as the said lenght
     assert len(data) == n
+
+    heap_type = input()
+
+    assert heap_type == 'I' or heap_type == 'F'
 
     # calls function to assess the data 
     # and give back all swaps
